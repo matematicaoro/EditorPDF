@@ -467,7 +467,7 @@ $('saveCopy').onclick=()=>{forceDownload=true;$('save').click()};
 /* Uscita guidata: chiede se salvare il PDF prima di chiudere l'app */
 {const dlg=$('quitDlg'),show=v=>dlg.classList.toggle('open',v);let exiting=false;
 addEventListener('beforeunload',e=>{if(exiting)e.stopImmediatePropagation()},true);
-const leave=()=>{exiting=true;show(false);/* I browser non permettono di chiudere una scheda aperta manualmente. */if(window.opener){window.close()}if(!window.closed){if(location.protocol==='file:'){location.replace('about:blank')}else{location.replace('https://matematicaoro.github.io/')}}};
+const leave=()=>{exiting=true;show(false);/* I browser non permettono di chiudere una scheda aperta manualmente. */if(window.opener){window.close()}if(!window.closed){location.replace('about:blank')}};
 $('quitBtn').onclick=()=>{if(!doc||!dirty()){leave();return}$('quitTitle').textContent='Vuoi salvare il lavoro?';$('quitText').textContent='Hai annotazioni non esportate in un PDF.';$('quitSave').textContent='Salva PDF';$('quitSave').style.display='';$('quitNo').textContent='Esci senza salvare';show(true)};
 $('quitSave').onclick=async()=>{const t=$('quitTitle'),x=$('quitText'),bs=[$('quitSave'),$('quitNo'),$('quitCancel')];t.textContent='Salvataggio in corso…';x.textContent='Scegli dove salvare il PDF.';bs.forEach(b=>b.disabled=true);
  let ok=false;try{ok=await $('save').onclick()}catch(e){console.error(e)}bs.forEach(b=>b.disabled=false);
