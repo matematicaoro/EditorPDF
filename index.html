@@ -468,7 +468,7 @@ $('saveCopy').onclick=()=>{forceDownload=true;$('save').click()};
 {const dlg=$('quitDlg'),show=v=>dlg.classList.toggle('open',v);let exiting=false;
 addEventListener('beforeunload',e=>{if(exiting)e.stopImmediatePropagation()},true);
 const leave=()=>{exiting=true;show(false);/* I browser non permettono di chiudere una scheda aperta manualmente. */if(window.opener){window.close()}if(!window.closed){location.replace('about:blank')}};
-$('quitBtn').onclick=()=>{if(!doc||!dirty()){leave();return}$('quitTitle').textContent='Vuoi salvare il lavoro?';$('quitText').textContent='Hai annotazioni non esportate in un PDF.';$('quitSave').textContent='Salva PDF';$('quitSave').style.display='';$('quitNo').textContent='Esci senza salvare';show(true)};
+$('quitBtn').onclick=()=>{if(!doc){leave();return}$('quitTitle').textContent='Vuoi salvare il lavoro?';$('quitText').textContent='Vuoi salvare una copia PDF del documento prima di uscire?';$('quitSave').textContent='Salva PDF';$('quitSave').style.display='';$('quitNo').textContent='Esci senza salvare';show(true)};
 $('quitSave').onclick=async()=>{const t=$('quitTitle'),x=$('quitText'),bs=[$('quitSave'),$('quitNo'),$('quitCancel')];t.textContent='Salvataggio in corso…';x.textContent='Scegli dove salvare il PDF.';bs.forEach(b=>b.disabled=true);
  let ok=false;try{ok=await $('save').onclick()}catch(e){console.error(e)}bs.forEach(b=>b.disabled=false);
  if(ok){t.textContent='PDF esportato';x.textContent='Uscita dall’app…';bs.forEach(b=>b.style.display='none');setTimeout(()=>{bs.forEach(b=>b.style.display='');leave()},700)}
