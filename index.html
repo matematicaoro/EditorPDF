@@ -464,10 +464,10 @@ $('saveCopy').onclick=()=>{forceDownload=true;$('save').click()};
 {const dlg=$('quitDlg'),show=v=>dlg.classList.toggle('open',v);let exiting=false;
 addEventListener('beforeunload',e=>{if(exiting)e.stopImmediatePropagation()},true);
 const leave=()=>{exiting=true;show(false);window.close();setTimeout(()=>{exiting=false;msg('Per uscire chiudi la finestra con la X')},400)};
-$('quitBtn').onclick=()=>{if(!doc){leave();return}$('quitTitle').textContent='Vuoi salvare il lavoro?';$('quitText').textContent='Vuoi salvare una copia PDF del documento prima di uscire?';$('quitSave').textContent='Salva PDF';$('quitSave').style.display='';$('quitNo').textContent='Esci senza salvare';show(true)};
-$('quitSave').onclick=async()=>{const t=$('quitTitle'),x=$('quitText'),bs=[$('quitSave'),$('quitNo'),$('quitCancel')];t.textContent='Salvataggio in corso…';x.textContent='Scegli dove salvare il PDF.';bs.forEach(b=>b.disabled=true);
+$('quitBtn').onclick=()=>{if(!doc){leave();return}$('quitTitle').textContent='Vuoi salvare il lavoro?';$('quitText').textContent='Vuoi salvare una copia PDF del documento prima di uscire?';$('quitSave').textContent='Salva PDF';$('quitSave').style.display='';$('quitNo').textContent='Esci senza salvare';$('quitCancel').textContent='Annulla';show(true)};
+$('quitSave').onclick=async()=>{const t=$('quitTitle'),x=$('quitText'),bs=[$('quitSave'),$('quitNo'),$('quitCancel')];t.textContent='Salvataggio in corso…';x.textContent='Preparo il PDF…';bs.forEach(b=>b.disabled=true);
  let ok=false;try{ok=await $('save').onclick()}catch(e){console.error(e)}bs.forEach(b=>b.disabled=false);
- if(ok){t.textContent='PDF esportato';x.textContent='Uscita dall’app…';bs.forEach(b=>b.style.display='none');setTimeout(()=>{bs.forEach(b=>b.style.display='');leave()},700)}
+ if(ok){t.textContent='PDF scaricato';x.textContent='Controlla che il file sia nella cartella Download. Poi puoi uscire oppure restare nell\'app.';$('quitSave').style.display='none';$('quitNo').textContent='Esci';$('quitCancel').textContent='Resta nell\'app'}
  else{t.textContent='Salvataggio non completato';x.textContent='Il lavoro non è stato salvato. Puoi riprovare, uscire senza salvare o tornare all\'app.';$('quitSave').textContent='Riprova'}};
 $('quitNo').onclick=leave;$('quitCancel').onclick=()=>show(false);
 dlg.addEventListener('click',e=>{if(e.target===dlg)show(false)});addEventListener('keydown',e=>{if(e.key==='Escape')show(false)})}
