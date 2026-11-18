@@ -116,13 +116,30 @@ button:focus-visible,.filelabel:focus-within,select:focus-visible,input:focus-vi
 @media(max-width:700px){#thumbPanel{width:94px}}
 @media(max-width:600px){header{padding:5px 9px}.bottomDock{padding:5px 8px}.bottomDock button{padding:7px 9px}}
 @media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+
+/* Barra su una sola riga: tablet e schermi medi */
+.toolbar{flex-wrap:nowrap}
+@media(max-width:1750px){
+ .toolbar{gap:5px;padding:4px 6px;min-height:0}
+ .toolbar>button,.toolbar>.grp>button{padding:5px 8px;font-size:15px;border-radius:8px}
+ .toolbar .lb{display:none}
+ .grp,#quickStyle{gap:2px;padding:2px;border-radius:10px}
+ #quickStyle{gap:5px;padding:2px 6px}
+ #swatches,#sizes{gap:4px}
+ .toolbar .sw{width:22px;height:22px}
+ .toolbar .sz{width:26px;height:24px;border-radius:7px}
+ .toolbar input[type=color]{width:24px;height:24px}
+ #pageinfo{font-size:11px;margin-left:auto}
+ #quickFull{margin-left:0}
+ #quickSave{font-size:13px}
+}
 </style></head><body><header><img class="logo" alt="MatematicaOro" width="34" height="34"><h1>Matematica<span>Oro</span></h1><small>A mano libera · Editor PDF</small><span id="docStatus">Documento non aperto</span><span id="autosave"></span></header>
 <div class="toolbar" id="toolbar">
-<div class="grp"><button data-tool="pen" class="active" id="quickPen" title="Penna (P)">✎ Penna</button><button data-tool="highlight" id="quickHighlight" title="Evidenziatore (H)">▰ Evid.</button><button data-tool="eraser" id="quickEraser" title="Gomma (E)">⌫ Gomma</button><button data-tool="lasso" id="quickLasso" title="Lazo (L)">♧ Lazo</button></div>
+<div class="grp"><button data-tool="pen" class="active" id="quickPen" title="Penna (P)"><span class="ic">✎</span><span class="lb"> Penna</span></button><button data-tool="highlight" id="quickHighlight" title="Evidenziatore (H)"><span class="ic">▰</span><span class="lb"> Evid.</span></button><button data-tool="eraser" id="quickEraser" title="Gomma (E)"><span class="ic">⌫</span><span class="lb"> Gomma</span></button><button data-tool="lasso" id="quickLasso" title="Lazo (L)"><span class="ic">♧</span><span class="lb"> Lazo</span></button></div>
 <div id="quickStyle"><span id="swatches"></span><input type="color" id="customColor" aria-label="Altro colore" title="Altro colore"><span id="sizes"></span><span id="stylePrev"><i></i></span></div>
 <div class="grp"><button id="undo" title="Annulla">↶</button><button id="redo" title="Ripristina">↷</button></div>
 <span id="pageinfo"></span>
-<button class="menuBtn" data-panel="pagesPanel">▤ Pagine ▾</button><button class="menuBtn" data-panel="toolsPanel">◇ Opzioni ▾</button><button class="menuBtn" data-panel="morePanel">⋯ File ▾</button><button id="quickSave" title="Esporta il PDF annotato">⬇ Salva PDF</button><button id="quickFull" title="Schermo intero">⛶</button>
+<button class="menuBtn" data-panel="pagesPanel" title="Pagine e vista"><span class="ic">▤</span><span class="lb"> Pagine ▾</span></button><button class="menuBtn" data-panel="toolsPanel" title="Opzioni di disegno"><span class="ic">◇</span><span class="lb"> Opzioni ▾</span></button><button class="menuBtn" data-panel="morePanel" title="File"><span class="ic">⋯</span><span class="lb"> File ▾</span></button><button id="quickSave" title="Esporta il PDF annotato"><span class="ic">⬇</span><span class="keep"> Salva</span><span class="lb"> PDF</span></button><button id="quickFull" title="Schermo intero">⛶</button>
 <div class="groupPanel" id="toolsPanel"><button id="dashBtn" title="Linea tratteggiata">┄ Tratteggio</button><label><input id="smart" type="checkbox" checked> Forme intelligenti</label><label><input id="scribble" type="checkbox" checked> Cancella scarabocchiando</label><label>Disegno <select id="shapeKind"><option value="auto">Automatica</option><option value="line">Retta</option><option value="circle">Circonferenza</option><option value="ellipse">Ellisse</option><option value="rectangle">Rettangolo</option><option value="square">Quadrato</option><option value="triangle">Triangolo</option><option value="parabola">Parabola</option><option value="hyperbola">Iperbole</option><option value="exponential">Esponenziale</option><option value="logarithm">Logaritmo</option></select></label><small id="shapeHint" style="color:#526174;max-width:290px">Con Penna o Evidenziatore, una pausa di 0,6 s raddrizza la linea: senza sollevare la punta, muovila per modificarne l'inclinazione.</small><label>Colore <input id="color" type="color" value="#2057c7"></label><label>Spessore <input id="size" type="range" min="1" max="16" value="3"><span id="sizeText">3</span></label></div>
 <div class="groupPanel" id="pagesPanel"><button id="toggleThumbs">▤ Mostra miniature</button><button id="addPage">＋ Pagina vuota</button><button id="duplicatePage">▣ Duplica pagina</button><button id="deletePage">⌫ Elimina pagina</button><button id="movePageUp">↑ Sposta prima</button><button id="movePageDown">↓ Sposta dopo</button><span class="sep"></span><button id="zoomout">−</button><span id="zoomlabel">100%</span><button id="zoomin">＋</button><button id="fit">Adatta</button><button id="full">⛶ Schermo intero</button><span class="sep"></span><label class="filelabel">＋ Importa PDF<input id="appendFile" type="file" accept="application/pdf,.pdf"></label></div>
 
