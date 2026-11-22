@@ -1,0 +1,10 @@
+MatematicaOro - EditorPDF GitHub Pages
+
+Caricare nella radice del ramo main: index.html, sw.js, manifest.webmanifest, icon-192.png, icon-512.png e la cartella lib completa.
+Non caricare questo file di istruzioni se non necessario.
+Impostazioni Pages: Deploy from a branch, main, /(root).
+URL: https://matematicaoro.github.io/EditorPDF/
+
+ATTENZIONE: la nuova origine github.io non condivide IndexedDB con localhost:8765. Esportare i documenti importanti dalla vecchia app prima di cambiare installazione. Non cancellare i dati del sito localhost.
+
+Verificare online: apertura PDF, annotazioni, salvataggio, ricaricamento, poi offline. Test statici soltanto; non collaudato in Edge/Android.

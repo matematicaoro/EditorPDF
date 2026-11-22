@@ -1,5 +1,5 @@
 /* MatematicaOro — aggiornamento controllato e utilizzo offline. */
-const VERSION = 'mo-20261122-1';
+const VERSION = 'mo-20261122-github-1';
 const ASSETS = ['./index.html', './manifest.webmanifest', './icon-192.png', './icon-512.png', './lib/pdf.min.js', './lib/pdf.worker.min.js', './lib/pdf-lib.min.js'];
 
 self.addEventListener('install', event => {
