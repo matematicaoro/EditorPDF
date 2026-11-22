@@ -129,7 +129,7 @@ button:focus-visible,.filelabel:focus-within,select:focus-visible,input:focus-vi
  #quickFull{margin-left:0}
  #quickSave{font-size:13px}
 }
-</style></head><body><header><img class="logo" alt="MatematicaOro" width="34" height="34"><h1>Matematica<span>Oro</span></h1><small>Annotazioni PDF · v2026.11.22.3</small><span id="docStatus">Documento non aperto</span><span id="autosave"></span></header>
+</style></head><body><header><img class="logo" alt="MatematicaOro" width="34" height="34"><h1>Matematica<span>Oro</span></h1><small>Annotazioni PDF · v2026.11.22.4</small><span id="docStatus">Documento non aperto</span><span id="autosave"></span></header>
 <div class="toolbar" id="toolbar">
 <div class="grp"><button data-tool="pen" class="active" id="quickPen" title="Penna (P)"><span class="ic">✎</span><span class="lb"> Penna</span></button><button data-tool="highlight" id="quickHighlight" title="Evidenziatore (H)"><span class="ic">▰</span><span class="lb"> Evid.</span></button><button data-tool="eraser" id="quickEraser" title="Gomma (E)"><span class="ic">⌫</span><span class="lb"> Gomma</span></button><button data-tool="lasso" id="quickLasso" title="Lazo (L)"><span class="ic">♧</span><span class="lb"> Lazo</span></button></div>
 <div id="quickStyle"><span id="swatches"></span><input type="color" id="customColor" aria-label="Altro colore" title="Altro colore"><span id="sizes"></span><span id="stylePrev"><i></i></span></div>
@@ -514,8 +514,8 @@ let saving=false,again=false,exportSig=null,saveFailed=false,lastStoredBytes=nul
 const sig=()=>bytes?bytes.byteLength+'|'+JSON.stringify(items):'';
 const dirty=()=>!!doc&&items.length>0&&sig()!==exportSig;
 const idb=()=>new Promise((ok,ko)=>{const r=indexedDB.open('matematicaoro',1);r.onupgradeneeded=()=>r.result.createObjectStore('s');r.onsuccess=()=>ok(r.result);r.onerror=()=>ko(r.error)});
-const idbGet=async k=>{const d=await idb();return new Promise((ok,ko)=>{const q=d.transaction('s').objectStore('s').get(k);q.onsuccess=()=>ok(q.result);q.onerror=()=>ko(q.error)})};
-const idbPut=async o=>{const d=await idb();return new Promise((ok,ko)=>{const t=d.transaction('s','readwrite'),st=t.objectStore('s');for(const k in o)st.put(o[k],k);t.oncomplete=ok;t.onerror=t.onabort=()=>ko(t.error)})};
+const idbGet=async k=>{const d=await idb();return new Promise((ok,ko)=>{let value;try{const t=d.transaction('s','readonly'),q=t.objectStore('s').get(k);q.onsuccess=()=>{value=q.result};t.oncomplete=()=>{d.close();ok(value)};t.onerror=t.onabort=()=>{const error=t.error||new Error('Lettura IndexedDB non riuscita');d.close();ko(error)}}catch(error){d.close();ko(error)}})};
+const idbPut=async o=>{const d=await idb();return new Promise((ok,ko)=>{try{const t=d.transaction('s','readwrite'),st=t.objectStore('s');for(const k in o)st.put(o[k],k);t.oncomplete=()=>{d.close();ok()};t.onerror=t.onabort=()=>{const error=t.error||new Error('Scrittura IndexedDB non riuscita');d.close();ko(error)}}catch(error){d.close();ko(error)}})};
 
 async function saveSession(){if(!doc||!bytes)return;if(saving){again=true;return}saving=true;try{const snapshotItems=JSON.parse(JSON.stringify(items));const storing=bytes,snapshotBytes=storing===lastStoredBytes?null:storing.slice(0);const o={meta:{items:snapshotItems,nextId,filename,style:createdDocumentPageStyle,page:currentPage(),pages:doc.numPages,at:Date.now()}};if(snapshotBytes)o.pdf=snapshotBytes;await idbPut(o);lastStoredBytes=storing;saveFailed=false;$('autosave').textContent='✓ Salvato '+new Date().toLocaleTimeString('it-IT',{hour:'2-digit',minute:'2-digit'});$('autosave').className=''}catch(err){console.error(err);$('autosave').textContent='⚠ Salvataggio automatico non riuscito';$('autosave').className='bad';if(!saveFailed){saveFailed=true;msg('Salvataggio automatico non riuscito: esporta il PDF con Salva')}}saving=false;if(again){again=false;saveSession()}}
 const sched=()=>{clearTimeout(sched.t);sched.t=setTimeout(saveSession,1200)};
